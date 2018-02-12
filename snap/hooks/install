@@ -20,8 +20,6 @@ INSTALL_DIR=${SNAP}/opt/HPCCSystems
 CONFIG_DIR=${SNAP_COMMON}/etc/HPCCSystems
 CONFIG_DIR0=/etc/HPCCSystems
 
-touch ${SNAP_COMMON}/my.txt
-
 source ${INSTALL_DIR}/etc/init.d/hpcc_common
 source ${INSTALL_DIR}/etc/init.d/init-functions
 

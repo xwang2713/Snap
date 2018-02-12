@@ -11,7 +11,7 @@ parts:
   hpcc-ce:
     # See 'snapcraft plugins'
     plugin: cmake
-    source: ../hpcc_ming
+    source: ../HPCC-Platform
     configflags: 
         - -DMAKE_SNAP=ON
         - -DWSSQL_SERVICE=OFF
