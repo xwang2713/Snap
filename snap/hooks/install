@@ -23,6 +23,7 @@ CONFIG_DIR0=/etc/HPCCSystems
 source ${INSTALL_DIR}/etc/init.d/hpcc_common
 source ${INSTALL_DIR}/etc/init.d/init-functions
 
+
 installConfs ()
 {
     fileName=$1
@@ -197,12 +198,15 @@ installConfs "environment.xml" $configs/  1 || exit 1
 installConfs "genenvrules.conf" $configs/ 1 || exit 1
 
 installFile "$path${CONFIG_DIR}/version" "${CONFIG_DIR}/version" 1 || exit 1
-installFile "$initPath/dafilesrv" "/etc/init.d/dafilesrv" 1 || exit 1
-installFile "$binPath/dfuplus" "/usr/bin/dfuplus" 1 || exit 1
-installFile "$binPath/ecl" "/usr/bin/ecl" 1 || exit 1
-installFile "$binPath/eclcc" "/usr/bin/eclcc" 1 || exit 1
-installFile "$binPath/eclplus" "/usr/bin/eclplus" 1 || exit 1
-installFile "$binPath/wuget" "/usr/bin/wuget" 1 || exit 1
+
+[ ! -d "${SNAP_COMMON}/etc/init.d" ] && mkdir -p ${SNAP_COMMON}/etc/init.d 
+installFile "$initPath/dafilesrv" "${SNAP_COMMON}/etc/init.d/dafilesrv" 1  || exit 1
+installFile "$initPath/hpcc-init" "${SNAP_COMMON}/etc/init.d/hpcc-init" 1  || exit 1
+#installFile "$binPath/dfuplus" "/usr/bin/dfuplus" 1 || exit 1
+#installFile "$binPath/ecl" "/usr/bin/ecl" 1 || exit 1
+#installFile "$binPath/eclcc" "/usr/bin/eclcc" 1 || exit 1
+#installFile "$binPath/eclplus" "/usr/bin/eclplus" 1 || exit 1
+#installFile "$binPath/wuget" "/usr/bin/wuget" 1 || exit 1
 installFile "$configs/$environment" "$sourcedir/$environment" 0 "$sourcedir"
 
 # locate sub install files.
@@ -212,12 +216,13 @@ if [ -d ${INSTALL_DIR}/etc/init.d/install ]; then
     done
 fi
 
-# bash completion
-if [ -d ${INSTALL_DIR}/etc/bash_completion.d ] && [ -d /etc/bash_completion.d ]; then
-    for subInstall in $(ls ${INSTALL_DIR}/etc/bash_completion.d | grep -v dpkg-tmp); do
-        installFile ${INSTALL_DIR}/etc/bash_completion.d/$subInstall /etc/bash_completion.d/$subInstall 1 || exit 1
-    done
-fi
+# Done in snapcraft.yaml
+## bash completion
+#if [ -d ${INSTALL_DIR}/etc/bash_completion.d ] && [ -d /etc/bash_completion.d ]; then
+#    for subInstall in $(ls ${INSTALL_DIR}/etc/bash_completion.d | grep -v dpkg-tmp); do
+#        installFile ${INSTALL_DIR}/etc/bash_completion.d/$subInstall /etc/bash_completion.d/$subInstall 1 || exit 1
+#    done
+#fi
 
 
 # SSH config dir

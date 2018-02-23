@@ -11,8 +11,9 @@ parts:
   hpcc-ce:
     # See 'snapcraft plugins'
     plugin: cmake
-    source: ../HPCC-Platform
+    source: ../HPCC-15738_snap
     configflags: 
+        - -DCMAKE_BUILD_TYPE=Debug
         - -DMAKE_SNAP=ON
         - -DWSSQL_SERVICE=OFF
 
@@ -20,7 +21,11 @@ parts:
       - opt/*
       - usr/*
       - var/snap/*
+      - home/*
+      - etc/*
 
+environment:
+   HOME:  /home/hpcc
 
 apps:
 
@@ -28,7 +33,7 @@ apps:
     command: opt/HPCCSystems/etc/init.d/hpcc-init
 
   dafilesrv:
-    command: opt/HPCCSystems/bin/dafilesrv
+    command: opt/HPCCSystems/etc/init.d/dafilesrv
 
   daliadmin:
     command: opt/HPCCSystems/bin/daliadmin
@@ -45,14 +50,9 @@ apps:
   dfuserver:
     command: opt/HPCCSystems/bin/dfuserver
 
-  eclagent:
-    command: opt/HPCCSystems/bin/eclagent
 
   eclccserver:
     command: opt/HPCCSystems/bin/eclccserver
-
-  eclplus:
-    command: opt/HPCCSystems/bin/eclplus
 
   eclscheduler:
     command: opt/HPCCSystems/bin/eclscheduler
@@ -65,9 +65,6 @@ apps:
 
   esp:
     command: opt/HPCCSystems/bin/esp
-
-  frunssh:
-    command: opt/HPCCSystems/bin/frunssh
 
   roxie:
     command: opt/HPCCSystems/bin/roxie
@@ -86,6 +83,28 @@ apps:
 
   wutool:
     command: opt/HPCCSystems/bin/wutool
+
+  sshslaves:
+    command: opt/HPCCSystems/bin/sshslaves
+
+  frunssh:
+    command: opt/HPCCSystems/bin/frunssh
+
+  ecl:
+    command: opt/HPCCSystems/bin/ecl
+    completer: opt/HPCCSystems/etc/bash_completion.d/ecl
+
+  eclcc:
+    command: opt/HPCCSystems/bin/eclcc
+    completer: opt/HPCCSystems/etc/bash_completion.d/eclcc
+
+  eclplus:
+    command: opt/HPCCSystems/bin/eclplus
+    completer: opt/HPCCSystems/etc/bash_completion.d/eclplus
+
+  eclagent:
+    command: opt/HPCCSystems/bin/eclagent
+    completer: opt/HPCCSystems/etc/bash_completion.d/eclagent
 
 
 #hooks:
