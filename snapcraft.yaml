@@ -13,9 +13,11 @@ parts:
     plugin: cmake
     source: ../HPCC-15738_snap
     configflags: 
-        - -DCMAKE_BUILD_TYPE=Debug
+        - -DCMAKE_BUILD_TYPE=Release
         - -DMAKE_SNAP=ON
         - -DWSSQL_SERVICE=OFF
+        - -DUSE_PYTHON2E=OFF
+
 
     prime:
       - opt/*
@@ -23,6 +25,20 @@ parts:
       - var/snap/*
       - home/*
       - etc/*
+
+
+    stage-packages:
+      #- gcc
+      # g++ is required to compile ECL code. But add it will interference build and fails to find libmvec_noshared.a
+      #- g++
+      - libapr1
+      - psmisc
+#     # - g++-5
+      #- gcc-5
+      #- gcc-6-base:amd64
+      #- gcc-5-base:amd64
+      #- libgcc-5-dev:amd64
+      #- libgcc1:amd64
 
 environment:
    HOME:  /home/hpcc

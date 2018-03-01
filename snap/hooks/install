@@ -16,7 +16,8 @@ set -e -x
 #    limitations under the License.
 ################################################################################
 
-INSTALL_DIR=${SNAP}/opt/HPCCSystems
+SNAP0=${SNAP%\/*}/current
+INSTALL_DIR=${SNAP0}/opt/HPCCSystems
 CONFIG_DIR=${SNAP_COMMON}/etc/HPCCSystems
 CONFIG_DIR0=/etc/HPCCSystems
 
@@ -287,6 +288,9 @@ if [ -d ${confPath} ]; then
         fi
     done
 fi
+
+sed  -i 's/^[[:space:]]*additionalPlugins[[:space:]]*=[[:space:]]*python2/additionalPlugins=python3/' ${CONFIG_DIR}/environment.conf
+echo "compilerPath=${SNAP0}/usr" > ${CONFIG_DIR}/eclcc.ini
 
 chown root:$group ${configs}
 chown -R $user:$group ${configs}/*
